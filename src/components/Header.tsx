@@ -21,7 +21,6 @@ const Header: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Optimized active index update
   useEffect(() => {
     const currentIndex = navItems.findIndex(item => item.path === location.pathname);
     if (currentIndex !== -1) {
@@ -29,7 +28,6 @@ const Header: React.FC = () => {
     }
   }, [location.pathname]);
 
-  // Optimized hover handlers with useCallback
   const handleNavHover = useCallback((index: number) => {
     setHoveredIndex(index);
   }, []);
@@ -38,7 +36,6 @@ const Header: React.FC = () => {
     setHoveredIndex(null);
   }, []);
 
-  // Calculate indicator position with CSS custom properties
   const getIndicatorStyle = () => {
     const targetIndex = hoveredIndex !== null ? hoveredIndex : activeIndex;
     return {
@@ -51,7 +48,6 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo - Simplified animations */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400 transition-colors duration-200 group-hover:scale-105" />
@@ -61,17 +57,14 @@ const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation - Optimized */}
           <nav className="hidden md:flex items-center">
-            <div 
+            <div
               ref={navRef}
               className="flex items-center relative p-1 rounded-2xl bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
               onMouseLeave={handleNavLeave}
               style={getIndicatorStyle()}
             >
-              {/* Single optimized background indicator */}
               <div className="nav-indicator absolute bg-gradient-to-r from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-400 rounded-xl h-10 transition-all duration-300 ease-out opacity-90" />
-
               {navItems.map(({ path, label }, index) => (
                 <Link
                   key={path}
@@ -89,7 +82,6 @@ const Header: React.FC = () => {
             </div>
           </nav>
 
-          {/* Theme Toggle & Mobile Menu - Simplified */}
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleTheme}
@@ -103,7 +95,6 @@ const Header: React.FC = () => {
               )}
             </button>
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100/80 dark:hover:bg-gray-800/50 transition-all duration-200"
@@ -118,7 +109,6 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Optimized */}
         <div className={`md:hidden transition-all duration-300 ease-in-out ${
           isMobileMenuOpen 
             ? 'max-h-80 opacity-100 py-4 border-t border-gray-200/50 dark:border-gray-700/50' 
@@ -142,7 +132,9 @@ const Header: React.FC = () => {
           </nav>
         </div>
       </div>
-      <style jsx>{`
+
+      {/* ✅ Fixed: No JSX attribute here */}
+      <style>{`
         .nav-indicator {
           width: calc(100% / var(--total-items));
           left: calc((100% / var(--total-items)) * var(--indicator-index));
