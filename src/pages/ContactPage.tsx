@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Clock, ArrowRight, Instagram, Linkedin, MessageCircle, Hash, Users, Shield, Target, Zap, Heart, Star, CheckCircle } from 'lucide-react';
 
 const ContactPage: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredSocial, setHoveredSocial] = useState<number | null>(null);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   const contactInfo = [
     {
       icon: Mail,
@@ -80,85 +88,153 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-gradient-to-tr from-pink-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-indigo-400/10 to-purple-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-800 dark:via-indigo-800 dark:to-purple-800 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
+      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-700 dark:from-blue-900 dark:via-indigo-900 dark:to-purple-900 overflow-hidden">
+        {/* Geometric Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='2'/%3E%3Ccircle cx='53' cy='7' r='2'/%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Ccircle cx='7' cy='53' r='2'/%3E%3Ccircle cx='53' cy='53' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
+        </div>
         
-        {/* Floating Elements */}
+        {/* Floating Animated Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-bounce" style={{ animationDelay: '0s', animationDuration: '3s' }}></div>
-          <div className="absolute top-40 right-20 w-16 h-16 bg-yellow-300/20 rounded-full blur-lg animate-bounce" style={{ animationDelay: '1s', animationDuration: '4s' }}></div>
-          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-pink-300/20 rounded-full blur-md animate-bounce" style={{ animationDelay: '2s', animationDuration: '5s' }}></div>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className={`absolute w-4 h-4 bg-white/20 rounded-full animate-bounce`}
+              style={{
+                left: `${10 + (i * 12)}%`,
+                top: `${20 + (i % 3) * 20}%`,
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: `${3 + (i % 3)}s`
+              }}
+            ></div>
+          ))}
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-8 animate-pulse">
-            <Shield className="h-10 w-10 text-white" />
+          <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-lg rounded-2xl mb-8 animate-pulse shadow-2xl border border-white/30">
+              <Shield className="h-12 w-12 text-white drop-shadow-lg" />
+            </div>
+            
+            <h1 className="text-6xl md:text-7xl font-black text-white mb-6 tracking-tight">
+              Get in{' '}
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+                  Touch
+                </span>
+                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 to-pink-400 rounded-full animate-pulse"></div>
+              </span>
+            </h1>
+            
+            <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-10 leading-relaxed font-light">
+              Ready to join the defenders? Have questions about our programs? 
+              We're here to help you start your cybersecurity journey and build a safer digital world together.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {[
+                { icon: Zap, text: 'Quick Response', color: 'from-yellow-400 to-orange-400' },
+                { icon: Heart, text: 'Community Driven', color: 'from-pink-400 to-red-400' },
+                { icon: Star, text: 'Expert Guidance', color: 'from-blue-400 to-indigo-400' }
+              ].map((badge, index) => (
+                <div 
+                  key={index}
+                  className={`flex items-center space-x-2 bg-white/20 backdrop-blur-lg rounded-full px-6 py-3 border border-white/30 transform transition-all duration-300 hover:scale-110 hover:bg-white/30 cursor-pointer shadow-lg`}
+                  style={{ animationDelay: `${0.6 + index * 0.2}s` }}
+                >
+                  <div className={`p-1 rounded-full bg-gradient-to-r ${badge.color}`}>
+                    <badge.icon className="h-4 w-4 text-white" />
+                  </div>
+                  <span className="text-white text-sm font-medium">{badge.text}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fadeInUp">
-            Get in{' '}
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent animate-pulse">
-              Touch
-            </span>
-          </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-            Ready to join the defenders? Have questions about our programs? 
-            We're here to help you start your cybersecurity journey and build a safer digital world together.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <Zap className="h-4 w-4 text-yellow-300" />
-              <span className="text-white text-sm">Quick Response</span>
-            </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <Heart className="h-4 w-4 text-pink-300" />
-              <span className="text-white text-sm">Community Driven</span>
-            </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-              <Star className="h-4 w-4 text-yellow-300" />
-              <span className="text-white text-sm">Expert Guidance</span>
-            </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-16 -mt-8 relative z-10">
+      <section className="py-20 -mt-12 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {contactInfo.map((item, index) => (
               <div
                 key={index}
-                className="group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl p-6 rounded-2xl shadow-xl hover:shadow-2xl border border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 transform hover:scale-105 hover:-translate-y-3 overflow-hidden"
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
+                className={`group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-2xl rounded-3xl shadow-2xl hover:shadow-3xl border border-gray-200/50 dark:border-gray-700/50 transition-all duration-700 transform hover:scale-105 hover:-translate-y-6 overflow-hidden ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                style={{ 
+                  animationDelay: `${0.8 + index * 0.2}s`,
+                  transitionDelay: `${index * 100}ms`
                 }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+                {/* Animated Background Gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 transition-all duration-500`}></div>
                 
-                <div className="relative z-10">
-                  <div className={`bg-gradient-to-r ${item.color} rounded-xl p-3 w-fit mx-auto mb-4 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg`}>
-                    <item.icon className="h-6 w-6 text-white" />
+                {/* Floating Particles Effect */}
+                {hoveredCard === index && (
+                  <div className="absolute inset-0 overflow-hidden">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-ping"
+                        style={{
+                          left: `${20 + (i * 15)}%`,
+                          top: `${30 + (i % 2) * 40}%`,
+                          animationDelay: `${i * 0.2}s`
+                        }}
+                      ></div>
+                    ))}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300">
+                )}
+                
+                <div className="relative z-10 p-8">
+                  <div className={`bg-gradient-to-r ${item.color} rounded-2xl p-4 w-fit mx-auto mb-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-2xl`}>
+                    <item.icon className="h-8 w-8 text-white drop-shadow-lg" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-500">
                     {item.title}
                   </h3>
-                  <p className="text-blue-600 dark:text-blue-400 font-medium mb-1 text-center">
+                  
+                  <p className="text-blue-600 dark:text-blue-400 font-semibold mb-2 text-center text-lg">
                     {item.info}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">
+                  
+                  <p className="text-gray-600 dark:text-gray-400 text-center mb-6 leading-relaxed">
                     {item.description}
                   </p>
+                  
                   {item.action && (
                     <a
                       href={item.action}
                       target={item.action.startsWith('http') ? '_blank' : '_self'}
                       rel={item.action.startsWith('http') ? 'noopener noreferrer' : ''}
-                      className={`block w-full text-center bg-gradient-to-r ${item.color} text-white py-2 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg`}
+                      className={`group/button block w-full text-center bg-gradient-to-r ${item.color} text-white py-4 px-6 rounded-2xl font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl relative overflow-hidden`}
                     >
-                      Contact Now
+                      <span className="relative z-10 flex items-center justify-center">
+                        Contact Now
+                        <ArrowRight className="ml-2 h-5 w-5 group-hover/button:translate-x-2 transition-transform duration-300" />
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover/button:opacity-100 transition-opacity duration-300"></div>
                     </a>
                   )}
                 </div>
@@ -169,49 +245,71 @@ const ContactPage: React.FC = () => {
       </section>
 
       {/* Social Media Links */}
-      <section className="py-20">
+      <section className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-              Connect with Our Community
+          <div className={`text-center mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '1.2s' }}>
+            <h2 className="text-4xl md:text-5xl font-black mb-6">
+              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                Connect with Our Community
+              </span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+            <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-6 rounded-full"></div>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
               Join our vibrant community across multiple platforms and stay updated with the latest in cybersecurity
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {socialLinks.map((social, index) => (
               <a
                 key={index}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-xl hover:shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden transition-all duration-500 transform hover:scale-105 hover:-translate-y-2"
+                className={`group relative bg-white/95 dark:bg-gray-800/95 backdrop-blur-2xl rounded-3xl shadow-2xl hover:shadow-3xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden transition-all duration-700 transform hover:scale-105 hover:-translate-y-4 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                 style={{
-                  animationDelay: `${index * 150}ms`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
+                  transitionDelay: `${1.4 + index * 0.15}s`
                 }}
+                onMouseEnter={() => setHoveredSocial(index)}
+                onMouseLeave={() => setHoveredSocial(null)}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${social.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                {/* Animated Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${social.color} opacity-0 group-hover:opacity-15 transition-all duration-500`}></div>
                 
-                <div className="relative p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className={`flex-shrink-0 w-14 h-14 bg-gradient-to-r ${social.color} rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-lg`}>
-                      <social.icon className="h-7 w-7 text-white" />
+                {/* Particle Animation */}
+                {hoveredSocial === index && (
+                  <div className="absolute inset-0 overflow-hidden">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className={`absolute w-1 h-1 bg-gradient-to-r ${social.color} rounded-full animate-ping`}
+                        style={{
+                          left: `${15 + (i * 10)}%`,
+                          top: `${20 + (i % 3) * 25}%`,
+                          animationDelay: `${i * 0.15}s`
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+                )}
+                
+                <div className="relative p-8">
+                  <div className="flex items-center space-x-6">
+                    <div className={`flex-shrink-0 w-16 h-16 bg-gradient-to-r ${social.color} rounded-3xl flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-2xl`}>
+                      <social.icon className="h-8 w-8 text-white drop-shadow-lg" />
                     </div>
                     
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-500">
                           {social.name}
                         </h3>
-                        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <span className={`text-sm font-bold px-3 py-1 rounded-full bg-gradient-to-r ${social.color} text-white shadow-lg`}>
                           {social.followers}
                         </span>
                       </div>
                       
-                      <p className="text-blue-600 dark:text-blue-400 font-medium text-sm mb-2">
+                      <p className="text-blue-600 dark:text-blue-400 font-semibold text-sm mb-3">
                         {social.handle}
                       </p>
                       
@@ -221,7 +319,7 @@ const ContactPage: React.FC = () => {
                     </div>
                     
                     <div className="flex-shrink-0">
-                      <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
+                      <ArrowRight className="h-6 w-6 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-2 transition-all duration-300" />
                     </div>
                   </div>
                 </div>
@@ -232,48 +330,51 @@ const ContactPage: React.FC = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      <section className="py-24 bg-gradient-to-br from-white/80 via-blue-50/80 to-indigo-100/80 dark:from-gray-800/80 dark:via-gray-900/80 dark:to-indigo-950/80 backdrop-blur-sm relative">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '1.8s' }}>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto mb-6 rounded-full"></div>
+            <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
               Quick answers to common questions about Cyber Knight
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-xl transform hover:scale-[1.02]"
+                className={`group bg-white/95 dark:bg-gray-800/95 backdrop-blur-2xl rounded-3xl p-8 shadow-2xl border border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 hover:shadow-3xl transform hover:scale-[1.02] hover:-translate-y-2 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                 style={{
-                  animationDelay: `${index * 100}ms`,
-                  animation: 'fadeInUp 0.6s ease-out forwards'
+                  transitionDelay: `${2 + index * 0.1}s`
                 }}
               >
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 animate-pulse"></div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300">
+                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mr-4 animate-pulse group-hover:scale-125 transition-transform duration-300"></div>
                   {faq.question}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 pl-5 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 pl-7 leading-relaxed text-lg">
                   {faq.answer}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <div className={`text-center mt-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '2.4s' }}>
+            <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
               Still have questions? We're here to help!
             </p>
             <a
               href="mailto:cyberknight@tips.edu.pk"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+              className="group inline-flex items-center px-10 py-5 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white font-bold text-lg rounded-2xl transition-all duration-500 transform hover:scale-110 hover:shadow-2xl relative overflow-hidden"
             >
-              Contact Us Directly
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <span className="relative z-10 flex items-center">
+                Contact Us Directly
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           </div>
         </div>

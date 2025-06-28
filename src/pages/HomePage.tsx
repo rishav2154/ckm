@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, BookOpen, Users, Award, ArrowRight, Play, Star, Trophy, Target, Zap, CheckCircle } from 'lucide-react';
 import Spline from '@splinetool/react-spline';
+import { motion } from 'framer-motion';
+import SplitText from '../components/SplitText';
 
 const HomePage: React.FC = () => {
   const features = [
@@ -92,12 +94,21 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fadeInUp">
-            Welcome to{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent animate-pulse">
-              Cyber Knight
-            </span>
-          </h1>
+         <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fadeInUp">
+      Welcome to{" "}
+      <span className="inline-block">
+        <SplitText
+          text="Cyber Knight"
+          className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent"
+          delay={100}
+          duration={0.6}
+          ease="easeOut"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          textAlign="center"
+        />
+      </span>
+    </h1>
 
           <p className="text-xl md:text-2xl text-white mb-8 max-w-3xl mx-auto animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
             The official Cybersecurity and Networking Club of TIPS - Where defenders are made and digital battles are won.
