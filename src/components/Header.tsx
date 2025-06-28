@@ -142,8 +142,6 @@ const Header: React.FC = () => {
           </nav>
         </div>
       </div>
-
-      {/* Optimized CSS for smooth indicator movement */}
       <style jsx>{`
         .nav-indicator {
           width: calc(100% / var(--total-items));
