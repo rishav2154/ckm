@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, BookOpen, Users, Award, ArrowRight, Play, Star, Trophy, Target, Zap, CheckCircle } from 'lucide-react';
-import Spline from '@splinetool/react-spline';
 import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
+
+// Lazy load the Spline component to prevent SSR/hydration issues
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const HomePage: React.FC = () => {
   const features = [
@@ -78,13 +80,22 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
         <section className="relative w-full h-screen overflow-hidden">
-      {/* ✅ Spline Background */}
-      <Spline
-        scene="https://prod.spline.design/wsHFWZahfUk6BG3C/scene.splinecode"
-        className="absolute top-0 left-0 w-full h-full z-0"
-      />
+      {/* Spline Background with Suspense */}
+      <Suspense fallback={
+        <div className="absolute top-0 left-0 w-full h-full z-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+            <p className="text-white text-lg">Loading 3D scene...</p>
+          </div>
+        </div>
+      }>
+        <Spline
+          scene="https://prod.spline.design/wsHFWZahfUk6BG3C/scene.splinecode"
+          className="absolute top-0 left-0 w-full h-full z-0"
+        />
+      </Suspense>
 
-      {/* ✅ Hero Content */}
+      {/* Hero Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center">
           <div className="flex justify-center mb-8">
