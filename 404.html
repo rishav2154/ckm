@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page Not Found - Redirecting...</title>
+    <script>
+      // Redirect any unknown path to /ckm/index.html (home route)
+      const redirectTo = '/ckm/';
+      const currentPath = window.location.pathname;
+
+      // Prevent infinite loop if already at /
+      if (currentPath !== redirectTo) {
+        window.location.replace(redirectTo);
+      }
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
