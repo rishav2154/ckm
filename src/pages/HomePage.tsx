@@ -136,7 +136,7 @@ const HomePage: React.FC = () => {
             </Link>
 
             <Link
-              to="/"
+              to="/contact"
               className="inline-flex items-center px-8 py-4 border-2 border-white/30 text-white hover:bg-white/10 font-semibold rounded-xl transition-all duration-300 backdrop-blur-sm transform hover:scale-105"
             >
               Learn More
