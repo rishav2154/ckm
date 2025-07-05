@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, Calendar, Tag, X, ChevronLeft, ChevronRight, ArrowLeft, Album } from 'lucide-react';
 import { photos, photoCategories, Photo } from '../data/photos';
+import ImageWithFallback from '../components/ImageWithFallback';
 
 const PhotosPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +14,6 @@ const PhotosPage: React.FC = () => {
   const filteredPhotos = useMemo(() => {
     let filtered = photos.filter((photo) => {
       const matchesSearch = photo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           photo.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            photo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || photo.category === selectedCategory;
@@ -36,7 +36,7 @@ const PhotosPage: React.FC = () => {
     const groups: Record<string, Photo[]> = {};
     
     photos.forEach(photo => {
-      const eventName = photo.title.split(' - ')[0] || photo.title;
+      const eventName = photo.title;
       if (!groups[eventName]) {
         groups[eventName] = [];
       }
@@ -179,7 +179,7 @@ const PhotosPage: React.FC = () => {
                   <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                   <input
                     type="text"
-                    placeholder="Search photos by title, description, or tags..."
+                    placeholder="Search photos by title or tags..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-14 pr-6 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white/90 dark:bg-gray-700/90 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-300 text-lg"
@@ -258,7 +258,7 @@ const PhotosPage: React.FC = () => {
                   {/* Album Cover */}
                   <div className="relative h-64 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-                    <img
+                    <ImageWithFallback
                       src={eventPhotos[0].imageUrl}
                       alt={eventName}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -277,7 +277,7 @@ const PhotosPage: React.FC = () => {
                             key={photo.id}
                             className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white/50 opacity-80 hover:opacity-100 transition-opacity duration-300"
                           >
-                            <img
+                            <ImageWithFallback
                               src={photo.imageUrl}
                               alt=""
                               className="w-full h-full object-cover"
@@ -374,7 +374,7 @@ const PhotosPage: React.FC = () => {
                     }}
                   >
                     <div className="aspect-square overflow-hidden relative">
-                      <img
+                      <ImageWithFallback
                         src={photo.imageUrl}
                         alt={photo.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -383,7 +383,6 @@ const PhotosPage: React.FC = () => {
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="text-white text-center p-4">
                           <h3 className="font-bold text-lg mb-2">{photo.title}</h3>
-                          <p className="text-sm opacity-90 line-clamp-2">{photo.description}</p>
                         </div>
                       </div>
                     </div>
@@ -458,7 +457,7 @@ const PhotosPage: React.FC = () => {
               )}
 
               {/* Image */}
-              <img
+              <ImageWithFallback
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
                 className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl animate-slideUp"
@@ -476,7 +475,6 @@ const PhotosPage: React.FC = () => {
                   </div>
                 </div>
                 <h2 className="text-3xl font-bold mb-3">{selectedPhoto.title}</h2>
-                <p className="text-gray-200 mb-4 text-lg">{selectedPhoto.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedPhoto.tags.map((tag) => (
                     <span
