@@ -383,6 +383,7 @@ const PhotosPage: React.FC = () => {
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="text-white text-center p-4">
                           <h3 className="font-bold text-lg mb-2">{photo.title}</h3>
+                          <p className="text-sm opacity-90 line-clamp-2">{photo.description}</p>
                         </div>
                       </div>
                     </div>
@@ -475,6 +476,7 @@ const PhotosPage: React.FC = () => {
                   </div>
                 </div>
                 <h2 className="text-3xl font-bold mb-3">{selectedPhoto.title}</h2>
+                <p className="text-gray-200 mb-4 text-lg">{selectedPhoto.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedPhoto.tags.map((tag) => (
                     <span
