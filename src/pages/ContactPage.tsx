@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Clock, ArrowRight, Instagram, Linkedin, MessageCircle, Hash, Users, Shield, Target, Zap, Heart, Star, CheckCircle, ExternalLink, User, Palette, Calendar, Code, Award, Github, Crown, Flame, Eye, Skull, Terminal, Cpu, Database, Monitor } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, ArrowRight, Instagram, Linkedin, MessageCircle, Hash, Users, Target, Zap, Heart, Star, CheckCircle, ExternalLink, User, Palette, Calendar, Code, Award, Github, Crown, Flame, Eye, Skull, Terminal, Cpu, Database, Monitor } from 'lucide-react';
 
 const ContactPage: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -187,7 +187,11 @@ const ContactPage: React.FC = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-lg rounded-2xl mb-8 animate-pulse shadow-2xl border border-white/30">
-              <Shield className="h-12 w-12 text-white drop-shadow-lg" />
+              <img 
+                src="/ckm/Untitled_design__1_-removebg-preview.png" 
+                alt="Cyber Knight Logo" 
+                className="h-24 w-24 drop-shadow-lg"
+              />
             </div>
             
             <h1 className="text-6xl md:text-7xl font-black text-white mb-6 tracking-tight">

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, BookOpen, Users, Award, ArrowRight, Play, Star, Trophy, Target, Zap, CheckCircle } from 'lucide-react';
+import { BookOpen, Users, Award, ArrowRight, Play, Star, Trophy, Target, Zap, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SplitText from '../components/SplitText';
 
@@ -56,7 +56,13 @@ const HomePage: React.FC = () => {
     {
       title: 'Network Security & Ethical Hacking',
       description: 'Advanced penetration testing, vulnerability assessment, and ethical hacking techniques',
-      icon: Shield,
+      icon: () => (
+        <img 
+          src="/ckm/Untitled_design__1_-removebg-preview.png" 
+          alt="Cyber Knight Logo" 
+          className="h-16 w-16"
+        />
+      ),
       color: 'from-red-500 to-pink-500',
       highlights: ['Penetration Testing', 'Vulnerability Assessment', 'Security Auditing']
     },
@@ -100,7 +106,11 @@ const HomePage: React.FC = () => {
         <div className="text-center">
           <div className="flex justify-center mb-8">
             <div className="relative animate-bounce">
-              <Shield className="h-20 w-20 text-blue-400 animate-pulse" />
+              <img 
+                src="/ckm/Untitled_design__1_-removebg-preview.png" 
+                alt="Cyber Knight Logo" 
+                className="h-40 w-40 animate-pulse"
+              />
               <div className="absolute inset-0 bg-blue-400/30 rounded-full blur-2xl animate-ping"></div>
             </div>
           </div>
@@ -165,7 +175,11 @@ const HomePage: React.FC = () => {
             <div className="space-y-8 animate-fadeInLeft">
               <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-blue-200/50 dark:border-blue-800/50">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-                  <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3 animate-pulse" />
+                  <img 
+                    src="/ckm/Untitled_design__1_-removebg-preview.png" 
+                    alt="Cyber Knight Logo" 
+                    className="h-16 w-16 mr-3 animate-pulse"
+                  />
                   Our Mission
                 </h3>
                 <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
@@ -263,7 +277,11 @@ const HomePage: React.FC = () => {
                   
                   <div className="relative z-10">
                     <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${dept.color} rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300`}>
-                      <dept.icon className="h-8 w-8 text-white" />
+                      {typeof dept.icon === 'function' ? (
+                        <dept.icon />
+                      ) : (
+                        <dept.icon className="h-8 w-8 text-white" />
+                      )}
                     </div>
                     
                     <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300">
