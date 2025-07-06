@@ -17,6 +17,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   const [imgSrc, setImgSrc] = useState(src);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [urlIndex, setUrlIndex] = useState(0);
 
   // Convert Google Drive URLs to different formats and add fallbacks
   const getAlternativeUrls = (originalUrl: string): string[] => {
@@ -38,37 +39,51 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     const randomFallback = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
     
     return [
+      // Primary Google Drive formats
       `https://drive.google.com/uc?export=view&id=${fileId}`,
-      `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`,
-      `https://lh3.googleusercontent.com/d/${fileId}`,
+      `https://drive.google.com/uc?id=${fileId}&export=download`,
+      `https://lh3.googleusercontent.com/d/${fileId}=w800-h600-no`,
+      `https://drive.google.com/thumbnail?id=${fileId}&sz=w800-h600`,
+      
+      // Alternative Google formats
+      `https://docs.google.com/uc?export=view&id=${fileId}`,
       `https://drive.google.com/file/d/${fileId}/preview`,
-      fallbackSrc || randomFallback
+      
+      // Fallback to Pexels images
+      fallbackSrc || randomFallback,
+      randomFallback
     ].filter(Boolean);
   };
 
-  const [urlIndex, setUrlIndex] = useState(0);
   const alternativeUrls = getAlternativeUrls(src);
 
   const handleError = () => {
+    console.log(`Image failed to load: ${imgSrc}`);
     if (urlIndex < alternativeUrls.length - 1) {
-      setUrlIndex(prev => prev + 1);
-      setImgSrc(alternativeUrls[urlIndex + 1]);
+      const nextIndex = urlIndex + 1;
+      setUrlIndex(nextIndex);
+      setImgSrc(alternativeUrls[nextIndex]);
+      setIsLoading(true);
+      console.log(`Trying alternative URL ${nextIndex}: ${alternativeUrls[nextIndex]}`);
     } else {
+      console.log('All URLs failed, showing error state');
       setHasError(true);
       setIsLoading(false);
     }
   };
 
   const handleLoad = () => {
+    console.log(`Image loaded successfully: ${imgSrc}`);
     setIsLoading(false);
     setHasError(false);
   };
 
   useEffect(() => {
-    setImgSrc(alternativeUrls[urlIndex]);
+    setImgSrc(alternativeUrls[0]);
+    setUrlIndex(0);
     setIsLoading(true);
     setHasError(false);
-  }, [src, urlIndex]);
+  }, [src]);
 
   if (hasError) {
     return (
@@ -98,6 +113,7 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
         onLoad={handleLoad}
         onError={handleError}
         loading="lazy"
+        crossOrigin="anonymous"
       />
     </div>
   );

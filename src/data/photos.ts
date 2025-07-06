@@ -13,7 +13,9 @@ export interface Photo {
 const convertGoogleDriveUrl = (shareUrl: string): string => {
   const fileIdMatch = shareUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
   if (fileIdMatch) {
-    return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+    const fileId = fileIdMatch[1];
+    // Use the most reliable Google Drive direct link format
+    return `https://drive.google.com/uc?export=view&id=${fileId}`;
   }
   return shareUrl;
 };
