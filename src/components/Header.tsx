@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Moon, Sun, Menu, X } from 'lucide-react';
+import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 const Header: React.FC = () => {
@@ -50,7 +50,11 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400 transition-colors duration-200 group-hover:scale-105" />
+              <img 
+                src="/ckm/Untitled_design__1_-removebg-preview.png" 
+                alt="Cyber Knight Logo" 
+                className="h-8 w-8 transition-transform duration-200 group-hover:scale-105"
+              />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Cyber Knight
@@ -133,7 +137,6 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* ✅ Fixed: No JSX attribute here */}
       <style>{`
         .nav-indicator {
           width: calc(100% / var(--total-items));
