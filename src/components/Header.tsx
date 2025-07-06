@@ -53,7 +53,7 @@ const Header: React.FC = () => {
               <img 
                 src="/ckm/Untitled_design__1_-removebg-preview.png" 
                 alt="Cyber Knight Logo" 
-                className="h-8 w-8 transition-transform duration-200 group-hover:scale-105"
+                className="h-12 w-12 transition-transform duration-200 group-hover:scale-105"
               />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
